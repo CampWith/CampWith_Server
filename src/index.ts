@@ -9,6 +9,7 @@ app.use(express.urlencoded());
 app.use(express.json());
 
 app.use('/api/users', require('./api/user'));
+app.use('/api/campsites', require('./api/campsite'));
 
 // error handler
 app.use((err, req, res, next) => {
