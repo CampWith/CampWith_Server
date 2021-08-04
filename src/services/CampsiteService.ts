@@ -7,7 +7,7 @@ export class CampsiteService {
       const list = await Campsite.find({ doNm: campsitelist_dto.doNm });
 
       const result = await {
-        campsiteList: list['addr1'],
+        campsiteList: list,
       };
 
       return result;
