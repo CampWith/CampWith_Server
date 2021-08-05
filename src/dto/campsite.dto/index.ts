@@ -1,5 +1,15 @@
+import mongoose from 'mongoose';
+
 export interface CampsiteListDto {
   doNm: String;
+}
+
+export interface CampsiteTypeDto {
+  category: Number;
+}
+
+export interface CampsiteDetailDto {
+  id: mongoose.Types.ObjectId;
 }
 
 export interface CampsiteListResultDto {
