@@ -11,6 +11,7 @@ app.use(express.json());
 app.use('/api/users', require('./api/user'));
 app.use('/api/campsites', require('./api/campsite'));
 app.use('/api/campingcar', require('./api/campingcar'));
+app.use('/api/campingtool', require('./api/campingtool'));
 
 // error handler
 app.use((err, req, res, next) => {
