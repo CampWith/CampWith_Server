@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import { ReviewAddDto, ReviewModifyDto } from '../dto/review.dto';
+import { ReviewAddDto, ReviewModifyDto, ReviewDeleteDto } from '../dto/review.dto';
 import { ReviewService } from '../services';
 
 export const addReview = async (req: Request, res: Response) => {
@@ -33,14 +33,14 @@ export const modifyReview = async (req: Request, res: Response) => {
   res.status(200).json({ result: result });
 };
 
-/*
 export const deleteReview = async (req: Request, res: Response) => {
-  const campingcar_dto: ReviewModifyDto = {
-   
+  const reviewDelete_dto: ReviewDeleteDto = {
+    uid: req.body.user.id,
+    review: req.body.review,
+    facltId: req.body.facltId,
   };
 
-  const result = await ReviewService.campingcarDetail(campingcar_dto);
+  const result = await ReviewService.deleteReview(reviewDelete_dto);
 
   res.status(200).json({ result: result });
 };
-*/

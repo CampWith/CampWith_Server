@@ -15,6 +15,7 @@ export interface ReviewModifyDto {
 }
 
 export interface ReviewDeleteDto {
+  uid: mongoose.Types.ObjectId;
   review: mongoose.Types.ObjectId;
   facltId: mongoose.Types.ObjectId;
 }

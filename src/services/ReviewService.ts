@@ -1,4 +1,4 @@
-import { ReviewAddDto, ReviewModifyDto } from '../dto/review.dto';
+import { ReviewAddDto, ReviewModifyDto, ReviewDeleteDto } from '../dto/review.dto';
 import Campsite from '../models/Campsite';
 import Review from '../models/Review';
 import User from '../models/User';
@@ -60,10 +60,11 @@ export class ReviewService {
       }
 
       const beforeRating = userReview['rating'];
+      const today = new Date();
 
       userReview['comment'] = comment;
       userReview['rating'] = rating;
-
+      userReview['time'] = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0));
       const campsite = await Campsite.findById(userReview['campsiteId']);
       const reviews = await Review.find({ campsiteId: userReview['campsiteId'] });
       const meanRate = campsite['meanRate'];
@@ -76,6 +77,41 @@ export class ReviewService {
       await campsite.save();
 
       const result = '리뷰가 수정되었습니다.';
+      return result;
+    } catch (err) {
+      console.error(err.message);
+      return {
+        message: 'Server Error',
+      };
+    }
+  }
+
+  static async deleteReview(reviewDelete_dto: ReviewDeleteDto) {
+    try {
+      const userReview = await Review.findById(reviewDelete_dto.review);
+      if (!userReview) {
+        return {
+          message: 'Review not found',
+        };
+      }
+      if (userReview.uid.toString() !== reviewDelete_dto.uid.toString()) {
+        return { message: 'User not Authorized' };
+      }
+
+      const rating = userReview['rating'];
+      const campsite = await Campsite.findById(userReview['campsiteId']);
+
+      const reviews = await Review.find({ campsiteId: userReview['campsiteId'] });
+      const meanRate = campsite['meanRate'];
+      const len = reviews.length;
+      const son: number = +meanRate * len - +rating;
+
+      campsite['meanRate'] = son / len;
+
+      await userReview.remove();
+      await campsite.save();
+
+      const result = '리뷰가 삭제되었습니다.';
       return result;
     } catch (err) {
       console.error(err.message);
