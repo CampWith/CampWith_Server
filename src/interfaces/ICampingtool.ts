@@ -1,5 +1,5 @@
 export interface ICampingtool {
-  title: String;
-  info: String;
-  img: String;
+  title: string;
+  info: string;
+  img: string;
 }

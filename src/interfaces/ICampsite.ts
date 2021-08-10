@@ -1,14 +1,14 @@
 export interface ICampsite {
-  addr1: String;
-  doNm: String;
-  facltNm: String;
-  homepage: String;
-  lineIntro: String;
-  mapX: Number;
-  mapY: Number;
-  sigunguNm: String;
-  firstImageUrl: String;
-  tel: String;
-  category: Number;
-  meanRate: Number;
+  addr1: string;
+  doNm: string;
+  facltNm: string;
+  homepage: string;
+  lineIntro: string;
+  mapX: number;
+  mapY: number;
+  sigunguNm: string;
+  firstImageUrl: string;
+  tel: string;
+  category: number;
+  meanRate: number;
 }

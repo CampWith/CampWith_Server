@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 
 export interface CampsiteListDto {
-  doNm: String;
+  doNm: string;
 }
 
 export interface CampsiteTypeDto {
-  category: Number;
+  category: number;
 }
 
 export interface CampsiteDetailDto {
@@ -13,17 +13,17 @@ export interface CampsiteDetailDto {
 }
 
 export interface CampsiteListResultDto {
-  addr1: String;
-  addr2: String;
-  lineIntro: String;
-  homepage: String;
-  doNm: String;
-  facltNm: String;
-  mapX: String;
-  mapY: String;
-  sigunguNm: String;
-  tel: String;
-  firstImageUrl: String;
-  category: Number;
-  mean_rate: Number;
+  addr1: string;
+  addr2: string;
+  lineIntro: string;
+  homepage: string;
+  doNm: string;
+  facltNm: string;
+  mapX: string;
+  mapY: string;
+  sigunguNm: string;
+  tel: string;
+  firstImageUrl: string;
+  category: number;
+  mean_rate: number;
 }

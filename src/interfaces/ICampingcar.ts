@@ -1,6 +1,6 @@
 export interface ICampingcar {
-  title: String;
-  img: String;
-  url: String;
-  price: String;
+  title: string;
+  img: string;
+  url: string;
+  price: string;
 }
