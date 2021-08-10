@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import { CampingcarDto } from '../dto/campingcar.dto';
-import { ReviewAddDto } from '../dto/review.dto';
-import { CampingcarService, ReviewService } from '../services';
+import { ReviewAddDto, ReviewModifyDto } from '../dto/review.dto';
+import { ReviewService } from '../services';
 
 export const addReview = async (req: Request, res: Response) => {
   const errors = validationResult(req);
@@ -22,21 +21,26 @@ export const addReview = async (req: Request, res: Response) => {
 };
 
 export const modifyReview = async (req: Request, res: Response) => {
-  const campingcar_dto: CampingcarDto = {
-    _id: req.params.id,
+  const reviewModify_dto: ReviewModifyDto = {
+    uid: req.body.user.id,
+    review: req.body.review,
+    comment: req.body.comment,
+    rating: req.body.rating,
   };
 
-  const result = await CampingcarService.campingcarDetail(campingcar_dto);
+  const result = await ReviewService.modifyReview(reviewModify_dto);
 
   res.status(200).json({ result: result });
 };
 
+/*
 export const deleteReview = async (req: Request, res: Response) => {
-  const campingcar_dto: CampingcarDto = {
-    _id: req.params.id,
+  const campingcar_dto: ReviewModifyDto = {
+   
   };
 
-  const result = await CampingcarService.campingcarDetail(campingcar_dto);
+  const result = await ReviewService.campingcarDetail(campingcar_dto);
 
   res.status(200).json({ result: result });
 };
+*/

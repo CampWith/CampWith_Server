@@ -8,6 +8,7 @@ export interface ReviewAddDto {
 }
 
 export interface ReviewModifyDto {
+  uid: mongoose.Types.ObjectId;
   review: mongoose.Types.ObjectId;
   comment: string;
   rating: number;

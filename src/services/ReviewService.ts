@@ -1,4 +1,4 @@
-import { ReviewAddDto } from '../dto/review.dto';
+import { ReviewAddDto, ReviewModifyDto } from '../dto/review.dto';
 import Campsite from '../models/Campsite';
 import Review from '../models/Review';
 import User from '../models/User';
@@ -34,7 +34,48 @@ export class ReviewService {
       await campsite.save();
       await newReview.save();
 
-      const result = '리뷰가 등록되었습니다.';
+      const result = await {
+        reviewId: newReview._id,
+      };
+      return result;
+    } catch (err) {
+      console.error(err.message);
+      return {
+        message: 'Server Error',
+      };
+    }
+  }
+
+  static async modifyReview(reviewModify_dto: ReviewModifyDto) {
+    try {
+      const { uid, review, comment, rating } = reviewModify_dto;
+
+      const userReview = await Review.findById(review);
+      if (!userReview) {
+        return { message: 'Review not found' };
+      }
+
+      if (userReview.uid.toString() !== uid.toString()) {
+        return { message: 'User not Authorized' };
+      }
+
+      const beforeRating = userReview['rating'];
+
+      userReview['comment'] = comment;
+      userReview['rating'] = rating;
+
+      const campsite = await Campsite.findById(userReview['campsiteId']);
+      const reviews = await Review.find({ campsiteId: userReview['campsiteId'] });
+      const meanRate = campsite['meanRate'];
+      const len = reviews.length;
+      const son: number = +meanRate * len + +rating - beforeRating;
+
+      campsite['meanRate'] = son / len;
+
+      await userReview.save();
+      await campsite.save();
+
+      const result = '리뷰가 수정되었습니다.';
       return result;
     } catch (err) {
       console.error(err.message);
