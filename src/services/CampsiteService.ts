@@ -1,5 +1,6 @@
 import { CampsiteListDto, CampsiteTypeDto, CampsiteDetailDto } from '../dto/campsite.dto';
 import Campsite from '../models/Campsite';
+import Review from '../models/Review';
 
 export class CampsiteService {
   static async campsiteList(campsitelist_dto: CampsiteListDto) {
@@ -40,8 +41,10 @@ export class CampsiteService {
     try {
       const list = await Campsite.findById(campsitedetail_dto.id);
 
+      const reviews = await Review.find({ campsiteId: campsitedetail_dto.id });
       const result = await {
         campsite: list,
+        reviews: reviews,
       };
 
       return result;

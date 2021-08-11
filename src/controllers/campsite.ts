@@ -20,7 +20,11 @@ export const campingSiteType = async (req: Request, res: Response) => {
 
   const result = await CampsiteService.campingSiteType(campsitetype_dto);
 
-  res.status(200).json({ result: result });
+  res.status(200).json({
+    success: true,
+    status: 200,
+    result: result,
+  });
 };
 
 export const campingSiteDetail = async (req: Request, res: Response) => {
@@ -30,5 +34,9 @@ export const campingSiteDetail = async (req: Request, res: Response) => {
 
   const result = await CampsiteService.campingSiteDetail(campsitedetail_dto);
 
-  res.status(200).json({ result: result });
+  res.status(200).json({
+    success: true,
+    status: 200,
+    result: result,
+  });
 };

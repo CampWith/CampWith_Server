@@ -6,7 +6,11 @@ import { CampingcarService } from '../services';
 export const campingcarList = async (req: Request, res: Response) => {
   const result = await CampingcarService.campingcarList();
 
-  res.status(200).json({ result: result });
+  res.status(200).json({
+    success: true,
+    status: 200,
+    result: result,
+  });
 };
 
 export const campingcarDetail = async (req: Request, res: Response) => {
@@ -16,5 +20,9 @@ export const campingcarDetail = async (req: Request, res: Response) => {
 
   const result = await CampingcarService.campingcarDetail(campingcar_dto);
 
-  res.status(200).json({ result: result });
+  res.status(200).json({
+    success: true,
+    status: 200,
+    result: result,
+  });
 };

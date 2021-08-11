@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import { check } from 'express-validator';
-import { campingSiteList } from '../controllers';
 import { campingcarDetail, campingcarList } from '../controllers/campingcar';
 const router = Router();
 

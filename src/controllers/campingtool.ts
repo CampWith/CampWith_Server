@@ -5,5 +5,9 @@ import { CampingtoolService } from '../services';
 export const campingtoolList = async (req: Request, res: Response) => {
   const result = await CampingtoolService.campingtoolList();
 
-  res.status(200).json({ result: result });
+  res.status(200).json({
+    success: true,
+    status: 200,
+    result: result,
+  });
 };

@@ -17,7 +17,11 @@ export const addReview = async (req: Request, res: Response) => {
 
   const result = await ReviewService.addReview(reviewAdd_dto);
 
-  res.status(200).json({ result: result });
+  res.status(200).json({
+    success: true,
+    status: 200,
+    result: result,
+  });
 };
 
 export const modifyReview = async (req: Request, res: Response) => {
@@ -30,7 +34,11 @@ export const modifyReview = async (req: Request, res: Response) => {
 
   const result = await ReviewService.modifyReview(reviewModify_dto);
 
-  res.status(200).json({ result: result });
+  res.status(200).json({
+    success: true,
+    status: 200,
+    result: result,
+  });
 };
 
 export const deleteReview = async (req: Request, res: Response) => {
@@ -42,5 +50,9 @@ export const deleteReview = async (req: Request, res: Response) => {
 
   const result = await ReviewService.deleteReview(reviewDelete_dto);
 
-  res.status(200).json({ result: result });
+  res.status(200).json({
+    success: true,
+    status: 200,
+    result: result,
+  });
 };
