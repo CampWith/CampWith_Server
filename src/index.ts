@@ -13,6 +13,7 @@ app.use('/api/campsites', require('./api/campsite'));
 app.use('/api/campingcar', require('./api/campingcar'));
 app.use('/api/campingtool', require('./api/campingtool'));
 app.use('/api/reviews', require('./api/review'));
+app.use('/api/campsites/recommend', require('./api/campsite'));
 
 // error handler
 app.use((err, req, res, next) => {

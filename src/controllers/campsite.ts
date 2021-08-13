@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import { CampsiteListDto, CampsiteTypeDto, CampsiteDetailDto } from '../dto/campsite.dto';
+import { CampsiteListDto, CampsiteTypeDto, CampsiteDetailDto, RecommendCampsiteDto } from '../dto/campsite.dto';
 import { CampsiteService } from '../services/CampsiteService';
 
 export const campingSiteList = async (req: Request, res: Response) => {
@@ -33,6 +33,20 @@ export const campingSiteDetail = async (req: Request, res: Response) => {
   };
 
   const result = await CampsiteService.campingSiteDetail(campsitedetail_dto);
+
+  res.status(200).json({
+    success: true,
+    status: 200,
+    result: result,
+  });
+};
+
+export const recommendCampsites = async (req: Request, res: Response) => {
+  const recommendCampsites_dto: RecommendCampsiteDto = {
+    uid: req.body.user.id,
+  };
+
+  const result = await CampsiteService.recommendCampsite(recommendCampsites_dto);
 
   res.status(200).json({
     success: true,

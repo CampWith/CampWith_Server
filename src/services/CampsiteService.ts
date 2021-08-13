@@ -1,4 +1,4 @@
-import { CampsiteListDto, CampsiteTypeDto, CampsiteDetailDto } from '../dto/campsite.dto';
+import { CampsiteListDto, CampsiteTypeDto, CampsiteDetailDto, RecommendCampsiteDto } from '../dto/campsite.dto';
 import Campsite from '../models/Campsite';
 import Review from '../models/Review';
 
@@ -47,6 +47,29 @@ export class CampsiteService {
         reviews: reviews,
       };
 
+      return result;
+    } catch (err) {
+      console.error(err.message);
+      return {
+        message: 'Server Error',
+      };
+    }
+  }
+
+  static async recommendCampsite(recommendCampsites_dto: RecommendCampsiteDto) {
+    try {
+      const reviews = await Review.find({ uid: recommendCampsites_dto.uid }).populate('campsiteId', {
+        category: 1,
+        _id: 0,
+      });
+      console.log(reviews);
+      const len = reviews.length;
+
+      let result;
+      if (len < 5) {
+        result = await Campsite.find().sort({ meanRate: -1 }).limit(5);
+      } else {
+      }
       return result;
     } catch (err) {
       console.error(err.message);
