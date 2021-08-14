@@ -1,4 +1,5 @@
 import { CampsiteListDto, CampsiteTypeDto, CampsiteDetailDto, RecommendCampsiteDto } from '../dto/campsite.dto';
+import { ICampsite } from '../interfaces/ICampsite';
 import Campsite from '../models/Campsite';
 import Review from '../models/Review';
 
@@ -62,14 +63,32 @@ export class CampsiteService {
         category: 1,
         _id: 0,
       });
-      console.log(reviews);
       const len = reviews.length;
 
       let result;
+      const categories = new Set();
       if (len < 5) {
         result = await Campsite.find().sort({ meanRate: -1 }).limit(5);
       } else {
+        reviews.map((v) => {
+          categories.add(v.campsiteId['category']);
+        });
+
+        let ret = [];
+
+        for (const category of categories) {
+          const campsites = await Campsite.find({ category: category }).sort({ meanRate: -1 }).limit(5);
+          ret = ret.concat(campsites);
+        }
+
+        ret.sort((a: ICampsite, b: ICampsite): number => {
+          return b.meanRate - a.meanRate;
+        });
+
+        console.log(ret);
+        result = ret.slice(0, 6);
       }
+
       return result;
     } catch (err) {
       console.error(err.message);
