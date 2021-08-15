@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 export interface SignUpDto {
   email: string;
   password: string;
@@ -18,4 +20,9 @@ export interface SignInDto {
 
 export interface SignInResultDto {
   token: string;
+}
+
+export interface FavoritesDto {
+  uid: string;
+  campsiteId: mongoose.Types.ObjectId;
 }

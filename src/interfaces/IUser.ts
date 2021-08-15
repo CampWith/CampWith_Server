@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 export interface IUser {
   email: string;
   password: string;
@@ -7,4 +9,5 @@ export interface IUser {
   birth: number;
   notice_agreement?: boolean;
   access_token?: string;
+  favorites: [mongoose.Types.ObjectId];
 }

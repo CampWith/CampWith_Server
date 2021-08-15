@@ -1,6 +1,7 @@
 import express from 'express';
 import { check } from 'express-validator';
-import { signIn, signUp } from '../controllers';
+import { addFavorites, signIn, signUp, deleteFavorites } from '../controllers';
+import auth from '../middleware/auth';
 const router = express.Router();
 
 const check_signup = [
@@ -20,5 +21,9 @@ const check_signin = [
 router.post('/signUp', check_signup, signUp);
 
 router.post('/signIn', check_signin, signIn);
+
+router.post('/favorites', auth, addFavorites);
+
+router.put('/favorites', auth, deleteFavorites);
 
 module.exports = router;

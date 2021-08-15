@@ -31,6 +31,9 @@ const UserSchema = new mongoose.Schema({
   access_token: {
     type: String,
   },
+  favorites: {
+    type: Array,
+  },
 });
 
 export default mongoose.model<IUser & mongoose.Document>('User', UserSchema);

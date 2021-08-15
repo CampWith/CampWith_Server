@@ -1,4 +1,4 @@
-import { SignInDto, SignUpDto } from '../dto/user.dto';
+import { FavoritesDto, SignInDto, SignUpDto } from '../dto/user.dto';
 import User from '../models/User';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
@@ -61,6 +61,47 @@ export class UserService {
       };
       const token = await jwt.sign(payload, config.jwtSecret, { expiresIn: '7d' });
       return token;
+    } catch (err) {
+      console.error(err.message);
+      return {
+        message: 'Server Error',
+      };
+    }
+  }
+
+  static async addFavorites(favorites_dto: FavoritesDto) {
+    try {
+      const user = await User.findById(favorites_dto.uid);
+      user['favorites'].push(favorites_dto.campsiteId);
+
+      await user.save();
+
+      const result = await {
+        nickname: user['nickname'],
+        favorites: user['favorites'],
+      };
+
+      return result;
+    } catch (err) {
+      console.error(err.message);
+      return {
+        message: 'Server Error',
+      };
+    }
+  }
+
+  static async deleteFavorites(favorites_dto: FavoritesDto) {
+    try {
+      const user = await User.findById(favorites_dto.uid);
+      user['favorites'].splice(user['favorites'].indexOf(favorites_dto.campsiteId), 1);
+      await user.save();
+
+      const result = await {
+        nickname: user['nickname'],
+        favorites: user['favorites'],
+      };
+
+      return result;
     } catch (err) {
       console.error(err.message);
       return {

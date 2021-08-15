@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import { SignInDto, SignUpDto } from '../dto/user.dto';
+import { FavoritesDto, SignInDto, SignUpDto } from '../dto/user.dto';
 import { UserService } from '../services';
 
 export const signUp = async (req: Request, res: Response) => {
@@ -46,4 +46,32 @@ export const signIn = async (req: Request, res: Response) => {
   } else {
     res.status(200).json({ token: result });
   }
+};
+
+export const addFavorites = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const favorites_dto: FavoritesDto = {
+    uid: req.body.user.id,
+    campsiteId: req.body.campsiteId,
+  };
+
+  const result = await UserService.addFavorites(favorites_dto);
+  res.status(200).json({ result: result });
+};
+
+export const deleteFavorites = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const favorites_dto: FavoritesDto = {
+    uid: req.body.user.id,
+    campsiteId: req.body.campsiteId,
+  };
+
+  const result = await UserService.deleteFavorites(favorites_dto);
+  res.status(200).json({ result: result });
 };
