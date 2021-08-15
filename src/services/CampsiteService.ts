@@ -85,7 +85,6 @@ export class CampsiteService {
           return b.meanRate - a.meanRate;
         });
 
-        console.log(ret);
         result = ret.slice(0, 6);
       }
 
