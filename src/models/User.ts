@@ -18,16 +18,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  gender: {
-    type: Number,
-  },
-  birth: {
-    type: Number,
-    required: true,
-  },
-  notice_agreement: {
-    type: Boolean,
-  },
   access_token: {
     type: String,
   },

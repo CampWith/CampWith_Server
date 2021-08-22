@@ -5,9 +5,6 @@ export interface IUser {
   password: string;
   salt?: string;
   nickname: string;
-  gender?: number;
-  birth: number;
-  notice_agreement?: boolean;
   access_token?: string;
   favorites: [mongoose.Types.ObjectId];
 }

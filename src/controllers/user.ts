@@ -13,9 +13,6 @@ export const signUp = async (req: Request, res: Response) => {
     email: req.body.email,
     password: req.body.password,
     nickname: req.body.nickname,
-    gender: req.body.gender,
-    birth: req.body.birth,
-    notice_agreement: req.body.notice_agreement,
   };
 
   const result = await UserService.signUp(signup_dto);

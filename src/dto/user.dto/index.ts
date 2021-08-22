@@ -4,9 +4,6 @@ export interface SignUpDto {
   email: string;
   password: string;
   nickname: string;
-  gender: number;
-  birth: number;
-  notice_agreement: boolean;
 }
 
 export interface SignUpResultDto {

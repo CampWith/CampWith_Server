@@ -8,9 +8,6 @@ const check_signup = [
   check('email', 'Please include a valid email').isEmail(),
   check('password', 'Please enter a password with 6 or more characters').isLength({ min: 6 }),
   check('nickname', 'Name is required').not().isEmpty(),
-  check('gender', 'Gender is required').not().isEmpty(),
-  check('birth', 'Birth is required').not().isEmpty(),
-  check('notice_agreement', 'Notice agreement is required').not().isEmpty(),
 ];
 
 const check_signin = [
