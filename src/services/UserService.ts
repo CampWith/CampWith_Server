@@ -1,5 +1,6 @@
 import { FavoritesDto, SignInDto, SignUpDto } from '../dto/user.dto';
 import User from '../models/User';
+import Campsite from '../models/Campsite';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import config from '../config';
@@ -76,9 +77,14 @@ export class UserService {
 
       await user.save();
 
+      let favorites = [];
+      for (const campsite of user['favorites']) {
+        const data = await Campsite.findById(campsite);
+        favorites.push(data);
+      }
       const result = await {
         nickname: user['nickname'],
-        favorites: user['favorites'],
+        favorites: favorites,
       };
 
       return result;
@@ -96,9 +102,14 @@ export class UserService {
       user['favorites'].splice(user['favorites'].indexOf(favorites_dto.campsiteId), 1);
       await user.save();
 
+      let favorites = [];
+      for (const campsite of user['favorites']) {
+        const data = await Campsite.findById(campsite);
+        favorites.push(data);
+      }
       const result = await {
         nickname: user['nickname'],
-        favorites: user['favorites'],
+        favorites: favorites,
       };
 
       return result;
