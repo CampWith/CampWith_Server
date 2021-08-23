@@ -61,7 +61,12 @@ export class UserService {
         },
       };
       const token = await jwt.sign(payload, config.jwtSecret, { expiresIn: '7d' });
-      return token;
+      const result = await {
+        token: token,
+        uid: user['_id'],
+        message: 'login successed',
+      };
+      return result;
     } catch (err) {
       console.error(err.message);
       return {

@@ -41,7 +41,7 @@ export const signIn = async (req: Request, res: Response) => {
   } else if (result.message === 'Server Error') {
     res.status(500).send('Server Error');
   } else {
-    res.status(200).json({ token: result });
+    res.status(200).json({ result: result });
   }
 };
 
