@@ -10,6 +10,7 @@ export interface CampsiteTypeDto {
 
 export interface CampsiteDetailDto {
   id: mongoose.Types.ObjectId;
+  uid: string;
 }
 
 export interface RecommendCampsiteDto {

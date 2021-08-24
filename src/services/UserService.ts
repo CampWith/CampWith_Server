@@ -1,4 +1,4 @@
-import { FavoritesDto, SignInDto, SignUpDto } from '../dto/user.dto';
+import { FavoritesDto, SignInDto, SignUpDto, getFavoritesDto } from '../dto/user.dto';
 import User from '../models/User';
 import Campsite from '../models/Campsite';
 import jwt from 'jsonwebtoken';
@@ -78,8 +78,28 @@ export class UserService {
   static async addFavorites(favorites_dto: FavoritesDto) {
     try {
       const user = await User.findById(favorites_dto.uid);
-      user['favorites'].push(favorites_dto.campsiteId);
 
+      if (user.favorites.filter((favorite) => favorite.toString() === favorites_dto.campsiteId.toString()).length > 0) {
+        return '이미 등록된 즐겨찾기입니다.';
+      }
+
+      user['favorites'].push(favorites_dto.campsiteId);
+      await user.save();
+
+      const result = '즐겨찾기가 등록되었습니다.';
+      return result;
+    } catch (err) {
+      console.error(err.message);
+      return {
+        message: 'Server Error',
+      };
+    }
+  }
+
+  static async deleteFavorites(favorites_dto: FavoritesDto) {
+    try {
+      const user = await User.findById(favorites_dto.uid);
+      user['favorites'].splice(user['favorites'].indexOf(favorites_dto.campsiteId), 1);
       await user.save();
 
       let favorites = [];
@@ -101,17 +121,16 @@ export class UserService {
     }
   }
 
-  static async deleteFavorites(favorites_dto: FavoritesDto) {
+  static async getFavorites(favorites_dto: getFavoritesDto) {
     try {
       const user = await User.findById(favorites_dto.uid);
-      user['favorites'].splice(user['favorites'].indexOf(favorites_dto.campsiteId), 1);
-      await user.save();
 
       let favorites = [];
       for (const campsite of user['favorites']) {
         const data = await Campsite.findById(campsite);
         favorites.push(data);
       }
+
       const result = await {
         nickname: user['nickname'],
         favorites: favorites,

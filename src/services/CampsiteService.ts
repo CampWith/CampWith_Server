@@ -2,6 +2,7 @@ import { CampsiteListDto, CampsiteTypeDto, CampsiteDetailDto, RecommendCampsiteD
 import { ICampsite } from '../interfaces/ICampsite';
 import Campsite from '../models/Campsite';
 import Review from '../models/Review';
+import User from '../models/User';
 
 export class CampsiteService {
   static async campsiteList(campsitelist_dto: CampsiteListDto) {
@@ -41,9 +42,16 @@ export class CampsiteService {
   static async campingSiteDetail(campsitedetail_dto: CampsiteDetailDto) {
     try {
       const list = await Campsite.findById(campsitedetail_dto.id);
+      const user = await User.findById(campsitedetail_dto.uid);
+      let is_favorite = false;
+
+      if (user.favorites.filter((favorite) => favorite.toString() === campsitedetail_dto.id.toString()).length > 0) {
+        is_favorite = true;
+      }
 
       const reviews = await Review.find({ campsiteId: campsitedetail_dto.id });
       const result = await {
+        is_favorite: is_favorite,
         campsite: list,
         reviews: reviews,
       };

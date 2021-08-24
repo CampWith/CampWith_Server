@@ -6,17 +6,13 @@ export interface SignUpDto {
   nickname: string;
 }
 
-export interface SignUpResultDto {
-  token: string;
+export interface getFavoritesDto {
+  uid: string;
 }
 
 export interface SignInDto {
   email: string;
   password: string;
-}
-
-export interface SignInResultDto {
-  token: string;
 }
 
 export interface FavoritesDto {

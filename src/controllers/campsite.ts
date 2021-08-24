@@ -30,6 +30,7 @@ export const campingSiteType = async (req: Request, res: Response) => {
 export const campingSiteDetail = async (req: Request, res: Response) => {
   const campsitedetail_dto: CampsiteDetailDto = {
     id: req.params.id,
+    uid: req.body.user.id,
   };
 
   const result = await CampsiteService.campingSiteDetail(campsitedetail_dto);

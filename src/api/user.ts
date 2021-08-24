@@ -1,6 +1,6 @@
 import express from 'express';
 import { check } from 'express-validator';
-import { addFavorites, signIn, signUp, deleteFavorites } from '../controllers';
+import { addFavorites, signIn, signUp, deleteFavorites, getFavorites } from '../controllers';
 import auth from '../middleware/auth';
 const router = express.Router();
 
@@ -22,5 +22,7 @@ router.post('/signIn', check_signin, signIn);
 router.post('/favorites', auth, addFavorites);
 
 router.put('/favorites', auth, deleteFavorites);
+
+router.get('/favorites', auth, getFavorites);
 
 module.exports = router;

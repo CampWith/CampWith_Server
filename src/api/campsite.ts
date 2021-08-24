@@ -7,7 +7,7 @@ router.get('/list/:doNm', campingSiteList);
 
 router.get('/category/:type', campingSiteType);
 
-router.get('/detail/:id', campingSiteDetail);
+router.get('/detail/:id', auth, campingSiteDetail);
 
 router.get('/recommend', auth, recommendCampsites);
 
