@@ -103,9 +103,10 @@ export class ReviewService {
 
       const reviews = await Review.find({ campsiteId: userReview['campsiteId'] });
       const meanRate = campsite['meanRate'];
-      const len = reviews.length;
+      let len = reviews.length;
       const son: number = +meanRate * len - +rating;
 
+      len = len - 1;
       campsite['meanRate'] = son / len;
 
       await userReview.remove();
