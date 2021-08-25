@@ -71,7 +71,8 @@ export class ReviewService {
       const len = reviews.length;
       const son: number = +meanRate * len + +rating - beforeRating;
 
-      campsite['meanRate'] = son / len;
+      if (son <= 0) campsite['meanRate'] = 0;
+      else campsite['meanRate'] = son / len;
 
       await userReview.save();
       await campsite.save();
@@ -89,6 +90,7 @@ export class ReviewService {
   static async deleteReview(reviewDelete_dto: ReviewDeleteDto) {
     try {
       const userReview = await Review.findById(reviewDelete_dto.review);
+      console.log(userReview);
       if (!userReview) {
         return {
           message: 'Review not found',
@@ -106,8 +108,10 @@ export class ReviewService {
       let len = reviews.length;
       const son: number = +meanRate * len - +rating;
 
+      console.log(campsite);
       len = len - 1;
-      campsite['meanRate'] = son / len;
+      if (son <= 0) campsite['meanRate'] = 0;
+      else campsite['meanRate'] = son / len;
 
       await userReview.remove();
       await campsite.save();
