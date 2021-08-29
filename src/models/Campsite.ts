@@ -42,6 +42,9 @@ const CampsiteSchema = new mongoose.Schema({
   meanRate: {
     type: Number,
   },
+  like: {
+    type: Number,
+  },
 });
 
 export default mongoose.model<ICampsite & mongoose.Document>('Campsite', CampsiteSchema);

@@ -67,36 +67,45 @@ export class CampsiteService {
 
   static async recommendCampsite(recommendCampsites_dto: RecommendCampsiteDto) {
     try {
-      const reviews = await Review.find({ uid: recommendCampsites_dto.uid }).populate('campsiteId', {
-        category: 1,
-        _id: 0,
+      const datas = await Review.find({}, { _id: 0, comment: 0, rating: 0, user: 0, time: 0 }).populate('campsiteId', {
+        _id: 1,
+        meanRate: 1,
+        like: 1,
       });
-      const len = reviews.length;
 
-      let result;
-      const categories = new Set();
-      if (len < 5) {
-        result = await Campsite.find().sort({ meanRate: -1 }).limit(5);
-      } else {
-        reviews.map((v) => {
-          categories.add(v.campsiteId['category']);
-        });
+      const campsite = await {
+        data: datas.map((v) => {
+          return {
+            campsiteId: v.campsiteId['_id'],
+            uid: v.uid,
+            meanRate: v.campsiteId['meanRate'],
+            like: v.campsiteId['like'],
+          };
+        }),
+      };
 
-        let ret = [];
+      const { CF, evaluation } = require('nodeml');
 
-        for (const category of categories) {
-          const campsites = await Campsite.find({ category: category }).sort({ meanRate: -1 }).limit(5);
-          ret = ret.concat(campsites);
-        }
+      let train = [],
+        test = [];
 
-        ret.sort((a: ICampsite, b: ICampsite): number => {
-          return b.meanRate - a.meanRate;
-        });
-
-        result = ret.slice(0, 6);
+      for (let i = 0; i < campsite['data'].length; i++) {
+        if (Math.random() > 0.8) test.push(campsite['data'][i]);
+        else train.push(campsite['data'][i]);
       }
 
-      return result;
+      const cf = new CF();
+      cf.train(train, 'uid', 'campsiteId', 'meanRate');
+
+      let gt = cf.gt(test, 'uid', 'campsiteId', 'meanRate');
+      let gtr = {};
+      let users = [];
+
+      const uid = recommendCampsites_dto.uid.toString();
+      users.push(uid);
+      let result = cf.recommendToUsers(users, 5);
+
+      return result[uid];
     } catch (err) {
       console.error(err.message);
       return {

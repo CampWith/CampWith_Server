@@ -11,4 +11,5 @@ export interface ICampsite {
   tel: string;
   category: number;
   meanRate: number;
+  like: number;
 }
