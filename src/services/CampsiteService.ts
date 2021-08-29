@@ -105,7 +105,13 @@ export class CampsiteService {
       users.push(uid);
       let result = cf.recommendToUsers(users, 5);
 
-      return result[uid];
+      let recommend = [];
+      for (let i = 0; i < 5; i++) {
+        const data = await Campsite.findById(result[uid][i]['itemId']);
+        recommend.push(data);
+      }
+
+      return recommend;
     } catch (err) {
       console.error(err.message);
       return {
